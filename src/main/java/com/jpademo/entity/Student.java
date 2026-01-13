@@ -1,25 +1,48 @@
 package com.jpademo.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
-@Table(name = "students")
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+
+@Table(name = "students", schema = "dbo")
 @Entity
 public class Student {
     @Id
     @Column(name = "student_id")
     private Long id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", columnDefinition = "NVARCHAR(50)")
     private String firstName;
 
-    @Column(name = "last_name")
+        @Column(name = "last_name")
     private String lastName;
 
     @Column(name = "email")
     private String email;
+
+    @Temporal(TemporalType.DATE) // cả ngày và giờ/ ko giờ thì dùng Date / Chỉ giờ thì dùng TIME
+    @Column(name = "dob")
+    private Date dob;
+
+    @Column(name = "hired_date")
+    private LocalDate hiredDate;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Enumerated(EnumType.ORDINAL) // mặc định ORDINAL là 0, 1, 2.
+    @Column(name = "gender")
+    private Gender gender;
+
+
+    @OneToMany(mappedBy = "student")
+    private List<Laptop> laptops;
+
+    @OneToOne(mappedBy = "student")
+    private Teacher teacher;
 
     public Student() {
     }
