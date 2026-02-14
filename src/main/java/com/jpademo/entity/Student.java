@@ -44,6 +44,9 @@ public class Student {
     @OneToOne(mappedBy = "student")
     private Teacher teacher;
 
+    @ManyToMany(mappedBy = "students")
+    private List<Course> courses;
+
     public Student() {
     }
 
